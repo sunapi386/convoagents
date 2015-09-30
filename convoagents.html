@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"  
+  "http://www.w3.org/TR/html4/loose.dtd">  
+<html > 
+<head><title>Customer Support Platform </title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+<meta name="generator" content="TeX4ht (http://www.tug.org/tex4ht/)"> 
+<meta name="originator" content="TeX4ht (http://www.tug.org/tex4ht/)"> 
+<!-- html --> 
+<meta name="src" content="convoagents.tex"> 
+<meta name="date" content="2015-09-30 16:52:00"> 
+<link rel="stylesheet" type="text/css" href="convoagents.css"> 
+</head><body 
+>
+   <div class="maketitle">
+                                                                                  
+                                                                                  
+                                                                                  
+                                                                                  
+
+<h2 class="titleHead">Customer Support Platform </h2>
+<div class="author" ></div><br />
+<div class="date" ><span 
+class="ecrm-1200">September 30, 2015</span></div>
+   </div>Increase customer support efficiency by using preformed answers and optionally modifying it before
+replying to customers.
+   <h3 class="likesectionHead"><a 
+ id="x1-1000"></a>Goal</h3>
+<!--l. 34--><p class="noindent" >Build an API as demo to investors, about 3 weeks away. Basically a customer hands over their customer
+support chat logs, we provide back query-responses through API. The (reiterated) version of the
+problem is: retrieve relevant responses (from previously seen responses) based on customer
+question.
+     <ul class="itemize1">
+     <li class="itemize">Treat customer question as a query.
+     </li>
+     <li class="itemize">Retrieve a reasonable response.
+     </li>
+     <li class="itemize">The meat of the problem lies in creating a good mapping from query to a response.</li></ul>
+<!--l. 45--><p class="noindent" >Due to the timely nature of building a demo in short time, I look to using pre-existing tools rather than
+develop an entire process from scratch. Obviously it&#8217;s hard to publish any papers on using existant
+techiques, but our goal constraint involves more engineering than research.
+<!--l. 52--><p class="noindent" >
+   <h3 class="likesectionHead"><a 
+ id="x1-2000"></a>Pre-existing tools approach </h3>
+<!--l. 55--><p class="noindent" >
+   <h4 class="likesubsectionHead"><a 
+ id="x1-3000"></a>Apache Lucene</h4>
+<!--l. 57--><p class="noindent" ><a 
+href="http://lucene.apache.org/core/" ><span 
+class="ecbx-1000">Apache Lucene</span></a>, arguably the most advanced, high-performance, and fully featured search engine library
+in existence today&#8212;both open source and proprietary. But since it is a library only, it would be difficult to
+get started - you&#8217;d need to build around the library. This is the search engine library used behind
+Wikipedia, Guardian, Stack Overflow, Github.
+     <ul class="itemize1">
+     <li class="itemize">Lucene has pluggable relevance <span 
+class="ecbx-1000">ranking models </span>(NLP information extraction and sentiment
+     analysis) are built in, including the the <a 
+href="https://en.wikipedia.org/wiki/Vector_space_model" >Vector Space Model</a> and <a 
+href="https://en.wikipedia.org/wiki/Okapi_BM25" >Okapi BM25</a>.</li></ul>
+                                                                                  
+                                                                                  
+<!--l. 70--><p class="noindent" >
+   <h4 class="likesubsectionHead"><a 
+ id="x1-4000"></a>Elasticsearch</h4>
+<!--l. 72--><p class="noindent" >Elasticsearch is also written in Java and uses Lucene internally but makes full-text search easy by hiding
+the complexities of Lucene behind a simple, coherent, RESTful API.
+     <ul class="itemize1">
+     <li class="itemize">Also pluggable <span 
+class="ecbx-1000">ranking models</span>! This is important to try different approaches to getting
+     good customer results. The modularity of this means we can build one pipeline, and improve
+     our response by using different ranking models.
+     </li>
+     <li class="itemize">Can be plugged with our own custom ranking functions. For instance, we might care about
+         <ul class="itemize2">
+         <li class="itemize">Information decay, where more recent responses snippet at the top.
+         </li>
+         <li class="itemize">Ranking based on uses and non-uses of a response snippet.</li></ul>
+     </li>
+     <li class="itemize">Customer&#8217;s questions treated as query input, and support agent&#8217;s responses treated as snippets to
+     look up.
+     </li>
+     <li class="itemize">Intro for using elasticsearch <a 
+href="https://www.elastic.co/guide/en/elasticsearch/guide/current/intro.html" >Learn | Docs</a></li></ul>
+<!--l. 92--><p class="noindent" >
+   <h4 class="likesubsectionHead"><a 
+ id="x1-5000"></a>Ranking Models</h4>
+<!--l. 94--><p class="noindent" >Using a good ranking model is the meat of the problem. Famous ranking models:
+     <ul class="itemize1">
+     <li class="itemize">TF-IDF <a 
+href="http://michaelerasm.us/tf-idf-in-10-minutes/" >What is TF-IDF? The 10 minute guide</a> <a 
+href="https://en.wikipedia.org/wiki/Tf%E2%80%93idf" >Wikipedia TF-IDF</a>
+     </li>
+     <li class="itemize">BM25  is  regarded  slightly  better  in  our  case  than  TF-IDF.  Quote  from  <a 
+href="https://www.elastic.co/blog/found-similarity-in-elasticsearch" >Similarity  in
+     Elasticsearch</a>.
+     <!--l. 102--><p class="noindent" >
+         <div class="quote">
+         <!--l. 103--><p class="noindent" >There is a reason why TF-IDF is as widespread as it is. It is conceptually easy to
+         understand and implement while also performing pretty well. That said, there are
+         other, strong candidates. Typically, they offer more tuning flexiblity. In this article
+         we have delved into one of them, BM25. In general, it is known to perform just as
+         good or even better than TF-IDF, especially on collections with short documents.</div>
+     </li>
+     <li class="itemize">Consider taking <a 
+href="https://class.coursera.org/nlp/lecture/124" >Coursera on NLP</a>, learn more about ranking models.</li></ul>
+    
+</body></html> 
+
+                                                                                  
+
+
